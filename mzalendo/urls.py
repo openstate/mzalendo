@@ -18,7 +18,7 @@ urlpatterns = patterns('',
 
 # Accounts
 urlpatterns += patterns('',
-    (r'^accounts/', include('registration.backends.default.urls')),
+    (r'^accounts/', include('registration.urls')),
 )
 
 # Comments

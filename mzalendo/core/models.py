@@ -12,7 +12,8 @@ from django.db.models import Q
 
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.gis.db import models
+# from django.contrib.gis.db import models
+from django.db import models
 
 from markitup.fields import MarkupField
 
@@ -50,7 +51,7 @@ class ModelBase(models.Model):
        abstract = True      
 
 
-class ManagerBase(models.GeoManager):
+class ManagerBase(models.Manager):
     def update_or_create(self, filter_attrs, attrs):
         """Given unique look-up attributes, and extra data attributes, either
         updates the entry referred to if it exists, or creates it if it doesn't.
@@ -131,7 +132,7 @@ class InformationSource(ModelBase):
        ordering = ["content_type", "object_id", "source"]      
 
 
-class PersonQuerySet(models.query.GeoQuerySet):
+class PersonQuerySet(models.query.QuerySet):
     def is_mp(self, when=None):
         # FIXME - Don't like the look of this, rather a big subquery.
         return self.filter(position__in=Position.objects.all().current_mp_positions(when))
@@ -320,7 +321,7 @@ class OrganisationKind(ModelBase):
        ordering = ["slug"]      
 
 
-class OrganisationQuerySet(models.query.GeoQuerySet):
+class OrganisationQuerySet(models.query.QuerySet):
     def parties(self):
         return self.filter(kind__slug='party')
 
@@ -386,7 +387,7 @@ class PlaceKind(ModelBase):
        ordering = ["slug"]      
 
 
-class PlaceQuerySet(models.query.GeoQuerySet):
+class PlaceQuerySet(models.query.QuerySet):
     def constituencies(self):
         return self.filter(kind__slug='constituency')
 
@@ -403,7 +404,7 @@ class Place(ModelBase, ScorecardMixin):
     kind = models.ForeignKey('PlaceKind')
     summary = MarkupField(blank=True, default='')
     shape_url = models.URLField(verify_exists=True, blank=True )
-    location = models.PointField(null=True, blank=True)
+    location = models.CharField(max_length=200, null=True, blank=True)
     organisation = models.ForeignKey('Organisation', null=True, blank=True, help_text="use if the place uniquely belongs to an organisation - eg a field office" )
     original_id  = models.PositiveIntegerField(blank=True, null=True, help_text='temporary - used to link to constituencies in original mzalendo.com db')
     mapit_id = models.PositiveIntegerField(blank=True, null=True)
@@ -495,7 +496,7 @@ class PositionTitle(ModelBase):
        ordering = ["slug"]      
 
 
-class PositionQuerySet(models.query.GeoQuerySet):
+class PositionQuerySet(models.query.QuerySet):
     def currently_active(self, when=None):
         """Filter on start and end dates to limit to currently active postitions"""
 

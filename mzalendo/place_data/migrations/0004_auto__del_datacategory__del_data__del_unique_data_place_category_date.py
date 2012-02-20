@@ -11,11 +11,12 @@ class Migration(SchemaMigration):
         # Removing unique constraint on 'Data', fields ['place', 'category', 'date']
         # db.delete_unique('place_data_data', ['place_id', 'category_id', 'date'])
 
+        # Deleting model 'Data'
+        db.delete_table('place_data_data')
+
         # Deleting model 'DataCategory'
         db.delete_table('place_data_datacategory')
 
-        # Deleting model 'Data'
-        db.delete_table('place_data_data')
 
 
     def backwards(self, orm):

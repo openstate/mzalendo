@@ -30,7 +30,7 @@ class InfoPage(models.Model):
     updated = models.DateTimeField( auto_now=True,     default=datetime.datetime.now(), )    
 
     slug    = models.SlugField(unique=True)
-    title   = models.CharField(max_length=300, unique=True)
+    title   = models.CharField(max_length=255, unique=True)
     content = MarkupField( help_text="When linking to other pages use their slugs as the address (note that these links do not work in the preview, but will on the real site)")
 
     def __unicode__(self):

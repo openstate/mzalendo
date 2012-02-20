@@ -65,7 +65,7 @@ MANAGERS = (
 
 DATABASES = {
     'default': {
-        'ENGINE':   'django.contrib.gis.db.backends.postgis',
+        'ENGINE':   'django.db.backends.mysql',
         'NAME':     config.get('MZALENDO_DB_NAME'),
         'USER':     config.get('MZALENDO_DB_USER'),
         'PASSWORD': config.get('MZALENDO_DB_PASS'),
@@ -149,9 +149,10 @@ CACHES = {
     # by default use memcached locally. This is what get used by
     # django.core.cache.cache
     'default': {
-        'BACKEND':    'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION':   '127.0.0.1:11211',
-        'KEY_PREFIX': 'mzalendo',
+        # 'BACKEND':    'django.core.cache.backends.memcached.MemcachedCache',
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        # 'LOCATION':   '127.0.0.1:11211',
+        # 'KEY_PREFIX': 'mzalendo',
     },
 
     # we also have a dummy cache that is used for all the page requests - we want

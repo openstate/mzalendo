@@ -57,7 +57,7 @@ class Migration(SchemaMigration):
             ('organisation', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Organisation'], null=True, blank=True)),
             ('shape_url', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True)),
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('location', self.gf('django.contrib.gis.db.models.fields.PointField')(null=True, blank=True)),
+            ('location', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
             ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=100, db_index=True)),
         ))
         db.send_create_signal('core', ['Place'])

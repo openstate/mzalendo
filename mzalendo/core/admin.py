@@ -1,7 +1,9 @@
 from django.contrib import admin
 from mzalendo.core import models
 from mzalendo.scorecards import models as scorecard_models
-from django.contrib.gis import db
+#from django.contrib.gis import db
+from django import db
+
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.generic import GenericTabularInline
 from django import forms

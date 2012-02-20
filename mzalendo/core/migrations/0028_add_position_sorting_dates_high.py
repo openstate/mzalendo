@@ -15,10 +15,11 @@ class Migration(SchemaMigration):
         # Adding field 'Position.sorting_end_date_high'
         db.add_column('core_position', 'sorting_end_date_high', self.gf('django.db.models.fields.CharField')(default='', max_length=10), keep_default=False)
 
-        for position in orm['core.Position'].objects.all():
-            position.sorting_start_date_high = re.sub('-00','-99', position.sorting_start_date)
-            position.sorting_end_date_high = re.sub('-00','-99', position.sorting_end_date)
-            position.save()
+        if not db.dry_run:
+            for position in orm['core.Position'].objects.all():
+                position.sorting_start_date_high = re.sub('-00','-99', position.sorting_start_date)
+                position.sorting_end_date_high = re.sub('-00','-99', position.sorting_end_date)
+                position.save()
 
     def backwards(self, orm):
         
@@ -155,7 +156,7 @@ class Migration(SchemaMigration):
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 1, 6, 18, 16, 58, 480353)', 'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'kind': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.PlaceKind']"}),
-            'location': ('django.contrib.gis.db.models.fields.PointField', [], {'null': 'True', 'blank': 'True'}),
+            'location': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'mapit_id': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'organisation': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.Organisation']", 'null': 'True', 'blank': 'True'}),

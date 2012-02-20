@@ -1,7 +1,8 @@
 import datetime
 
-from django.contrib.gis.db import models
-from django.contrib.gis.geos import Point
+#from django.contrib.gis.db import models
+#from django.contrib.gis.geos import Point
+from django.db import models
 
 from core.models import Place
 
@@ -32,7 +33,7 @@ class Project(models.Model):
     
     first_funding_year = models.IntegerField(blank=True, null=True)
 
-    location = models.PointField(srid=4326)
+    location = models.CharField(max_length=200)
         
     class Meta():
         # NOTE - the templates rely on this default ordering. Really we should
